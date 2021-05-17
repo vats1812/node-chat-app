@@ -1,4 +1,5 @@
-const socket = io('server');
+const socket = io("https://vats1812.github.io/node-chat-app/index.js/");
+
 
 const form = document.getElementById('send-cont');
 const messageInput = document.getElementById('messageInp');

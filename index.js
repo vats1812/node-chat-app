@@ -1,15 +1,19 @@
 const app = require('express')()
-const server = require('http').createServer(app)
-const io = require('socket.io')(server, {
-    cors: {
-        origin: '*',
-    }
-})
-var port = process.env.port || 7000
+const httpServer = require("http").createServer(app);
+const io = require("socket.io", "socket.io-client")(httpServer, {
+    origin: '*',
+});
+// const server = require('http').createServer(app)
+//     // const io = require('socket.io')(server, {
+//     //     cors: {
+//     //         origin: '*',
+//     //     }
+//     // })
+var port = process.env.PORT || 7000
 
 const users = {};
 
-io.on('connection', socket => {
+io.on("connection", (socket) => {
     socket.on('new-user-joined', name => {
         // console.log("New User", name);
         users[socket.id] = name;
@@ -25,6 +29,6 @@ io.on('connection', socket => {
     });
 })
 
-server.listen(port, function() {
+httpServer.listen(port, function() {
     console.log("i am listening at port 7000");
 })
