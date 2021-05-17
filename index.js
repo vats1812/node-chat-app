@@ -1,10 +1,12 @@
 const app = require('express')()
 const server = require('http').createServer(app)
-const io = require('socket.io')(7000, {
+const io = require('socket.io')(server, {
     cors: {
         origin: '*',
     }
 })
+var port = process.env.port || 7000
+
 const users = {};
 
 io.on('connection', socket => {
@@ -21,4 +23,8 @@ io.on('connection', socket => {
         socket.broadcast.emit('left', users[socket.id]);
         delete users[socket.id];
     });
+})
+
+server.listen(port, function() {
+    console.log("i am listening at port 7000");
 })
